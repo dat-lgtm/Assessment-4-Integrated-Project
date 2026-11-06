@@ -1,0 +1,70 @@
+<mujoco model="TurtleBot3 Burger Track A">
+  <compiler angle="radian" meshdir="assets" texturedir="assets"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"/>
+  <visual><global offwidth="960" offheight="720"/><headlight ambient="0.5 0.5 0.5"/></visual>
+  <default>
+    <geom friction="0.8 0.01 0.001" condim="4"/>
+    <joint damping="0.002" armature="0.001"/>
+  </default>
+  <asset>
+    <texture name="floor_texture" type="2d" builtin="checker" rgb1="0.25 0.28 0.32" rgb2="0.32 0.35 0.39" width="256" height="256"/>
+    <material name="floor_mat" texture="floor_texture" texrepeat="8 8"/>
+    <mesh name="burger" file="burger_base.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lds" file="lds.stl" scale="0.001 0.001 0.001"/>
+    <texture name="marker_texture" type="2d" file="aruco_0.png"/>
+    <material name="marker_mat" texture="marker_texture" texuniform="false" emission="0.7" reflectance="0"/>
+  </asset>
+  <worldbody>
+    <light pos="0 0 5" diffuse="0.8 0.8 0.8"/>
+    <geom name="floor" type="box" pos="0 0 -0.05" size="2.5 2.5 0.05" material="floor_mat"/>
+    <geom name="north_wall" type="box" pos="0 2.55 0.4" size="2.6 0.05 0.4" rgba="0.7 0.75 0.8 1"/>
+    <geom name="south_wall" type="box" pos="0 -2.55 0.4" size="2.6 0.05 0.4" rgba="0.7 0.75 0.8 1"/>
+    <geom name="east_wall" type="box" pos="2.55 0 0.4" size="0.05 2.5 0.4" rgba="0.7 0.75 0.8 1"/>
+    <geom name="west_wall" type="box" pos="-2.55 0 0.4" size="0.05 2.5 0.4" rgba="0.7 0.75 0.8 1"/>
+    <geom name="box_1" type="box" pos="-0.5 0.4 0.25" size="0.35 0.35 0.25" rgba="0.9 0.5 0.15 1"/>
+    <geom name="box_2" type="box" pos="0.9 -0.4 0.25" size="0.25 0.5 0.25" rgba="0.2 0.6 0.8 1"/>
+    <geom name="center_obstacle" type="box" pos="0 0 0.25" size="0.20 0.20 0.25" rgba="0.90 0.75 0.10 1"/>
+    <geom name="pillar" type="cylinder" pos="-1 1.5 0.3" size="0.25 0.3" rgba="0.7 0.3 0.3 1"/>
+    <geom name="extra_obstacle_1" type="box" pos="-0.3 -1.45 0.25" size="0.25 0.20 0.25" rgba="0.55 0.25 0.85 1"/>
+    <geom name="extra_obstacle_2" type="box" pos="1.4 0.8 0.25" size="0.22 0.25 0.25" rgba="0.10 0.65 0.85 1"/>
+    <!-- Join the central box to the north wall, closing the upper passage. -->
+    <geom name="upper_route_barrier" type="box" pos="-0.5 1.575 0.3" size="0.18 0.925 0.3" rgba="0.35 0.15 0.65 1"/>
+    <geom name="dock" type="box" pos="2 2 0.12" size="0.08 0.32 0.12" rgba="0.2 0.7 0.35 1"/>
+    <!-- Thin marker board faces -x. The texture is on the broad local xy face. -->
+    <geom name="aruco_board" type="box" pos="1.90 2 0.24" size="0.1 0.1 0.001" xyaxes="0 -1 0 0 0 1" material="marker_mat"/>
+    <camera name="overview" pos="5 -7 7" xyaxes="0.814 0.581 0 -0.412 0.577 0.705"/>
+    <!-- Heading pi/4 points from the bottom-left start towards the centre. -->
+    <body name="base_link" pos="-2 -2 0.011" euler="0 0 0.7853981633974483">
+      <freejoint name="base_free"/>
+      <inertial pos="-0.025 0 0.07" mass="0.82573504" diaginertia="0.0022 0.0021 0.002"/>
+      <geom name="base_visual" type="mesh" mesh="burger" pos="-0.032 0 0" rgba="0.2 0.2 0.22 1" contype="0" conaffinity="0" group="1"/>
+      <geom name="base_collision" type="box" pos="-0.032 0 0.07" size="0.07 0.07 0.0715" rgba="0.2 0.2 0.2 0" group="3"/>
+      <geom name="caster" type="sphere" pos="-0.081 0 -0.003" size="0.008" friction="0.001 0.001 0.001" rgba="0.4 0.4 0.4 1"/>
+      <body name="wheel_left" pos="0 0.08 0.023">
+        <joint name="wheel_left_joint" type="hinge" axis="0 1 0"/>
+        <geom name="left_tire" type="cylinder" size="0.033 0.009" euler="1.57079632679 0 0" mass="0.02849894" rgba="0.08 0.08 0.08 1"/>
+      </body>
+      <body name="wheel_right" pos="0 -0.08 0.023">
+        <joint name="wheel_right_joint" type="hinge" axis="0 1 0"/>
+        <geom name="right_tire" type="cylinder" size="0.033 0.009" euler="1.57079632679 0 0" mass="0.02849894" rgba="0.08 0.08 0.08 1"/>
+      </body>
+      <body name="laser_link" pos="-0.032 0 0.172">
+        <geom name="laser_visual" type="mesh" mesh="lds" rgba="0.12 0.12 0.12 1" contype="0" conaffinity="0" group="1"/>
+        <site name="laser" pos="0 0 0" size="0.004" rgba="1 0 0 1"/>
+      </body>
+      <geom name="camera_housing" type="box" pos="0.065 0 0.14" size="0.015 0.025 0.015" rgba="0.1 0.3 0.9 1" contype="0" conaffinity="0"/>
+      <!-- Robot: x forward, y left, z up. Optical: x right, y down, z forward. -->
+      <camera name="front_camera" pos="0.082 0 0.14" xyaxes="0 -1 0 0 0 1" fovy="60"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <velocity name="left_motor" joint="wheel_left_joint" kv="0.15" ctrlrange="-8 8" forcerange="-0.4 0.4"/>
+    <velocity name="right_motor" joint="wheel_right_joint" kv="0.15" ctrlrange="-8 8" forcerange="-0.4 0.4"/>
+  </actuator>
+  <sensor>
+    <jointpos name="left_encoder" joint="wheel_left_joint"/>
+    <jointpos name="right_encoder" joint="wheel_right_joint"/>
+    <jointvel name="left_velocity" joint="wheel_left_joint"/>
+    <jointvel name="right_velocity" joint="wheel_right_joint"/>
+  </sensor>
+</mujoco>
