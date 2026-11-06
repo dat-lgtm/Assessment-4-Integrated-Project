@@ -137,12 +137,3 @@ ChatGPT/Codex helped adapt the tutorial code and set up MuJoCo. It also helped w
 TurtleBot3 visual meshes were adapted from the [ROBOTIS TurtleBot3 repository](https://github.com/ROBOTIS-GIT/turtlebot3). The original source URDF and `ROBOTIS_LICENSE` are in `assets/`. Include the licence when sharing the project.
 
 
-## Five-minute video demo
-
-Open `video_demo.py` in VS Code and click Run Python File. This runs a nominal trial followed by a disturbed trial with 1.5 times the encoder and camera-corner noise, 15% camera dropout and a +0.02 rad/s yaw-command disturbance. The LiDAR noise stays the same. Normal operation through `main.py` still runs one trial.
-
-A live evaluation window shows the true x, y and heading beside the EKF estimate and its +/- 2 sigma uncertainty. The uncertainty comes from the diagonal of the EKF covariance P. These are approximate 95% intervals for each state under Gaussian assumptions, not guaranteed error limits. The controller does not receive the true values shown in this window.
-
-For the video, show the robot completing the nominal task, then show the changed conditions and the disturbed trial. Keep the uncertainty window visible beside the simulation where possible. Finish with the EKF consistency and docking graphs. Keep the submitted video under five minutes; if footage needs speeding up, label the playback speed. Report the actual trial outcome, including any failure.
-
-The launcher runs the simulation; it does not record a video. Use a screen recorder to capture it. Both trials' result figures appear after the runs finish.
