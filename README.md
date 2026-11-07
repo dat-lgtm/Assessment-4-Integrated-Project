@@ -3,8 +3,7 @@
 
 This project uses MuJoCo to simulate a TurtleBot3 for UTS 41014 Sensors and Control in Mechatronics Systems. The aim is to drive around obstacles and dock in front of a charging station using an ArUco marker.
 
-The robot starts in the bottom-left corner of a 5 m × 5 m room, at (-2, -2), facing the centre. The charging station is in the top-right corner at (2, 2). Obstacles sit between them, and a barrier blocks the upper passage so the robot has to take the lower route.
-
+The robot starts in the bottom-left corner of a 5 m × 5 m room, at (-2, -2), facing the centre. The charging station is in the top-right corner at (2, 2). 
 ## How it works
 
 - Wheel encoders measure wheel movement. The Extended Kalman Filter (EKF) uses these readings to predict the robot position and heading.
@@ -12,7 +11,7 @@ The robot starts in the bottom-left corner of a 5 m × 5 m room, at (-2, -2), fa
 - Near the station, the camera detects an ArUco marker and measures the robot position and heading relative to it.
 - The EKF corrects its prediction when camera or LiDAR measurements are available.
 - A* finds a route around the obstacles. The LQR controller follows that route using the EKF estimate.
-- During docking, a separate feedback controller brings the robot to a stop in front of the station. The simulation does not charge a battery.
+- During docking, a separate feedback controller brings the robot to a stop in front of the station.
 
 Before navigation starts, the robot runs two short calibration tests to compare wheel encoder movement with LiDAR measurements. It then uses the resulting scale factors during navigation. The program starts with a known map, marker position and robot starting pose.
 
@@ -40,7 +39,7 @@ UTS-41014-Track-A/
 └── README.md
 ```
 
-The `assets/` folder contains the robot meshes, marker image and ROBOTIS licence. Save your graph pictures in `results/`; the program does not save them automatically.
+The `assets/` folder contains the robot meshes, marker image and ROBOTIS licence. 
 
 ## Setup
 
@@ -57,7 +56,7 @@ Press **Ctrl+Shift+P**, choose **Python: Select Interpreter**, and select `.venv
 
 ## Run the simulation
 
-Once setup is complete, open `main.py` and click **Run Python File** in VS Code. You can run it this way without opening a separate PowerShell window.
+Once setup is complete, open `main.py` and click **Run Python File** in VS Code. 
 
 You should see the 3D simulation, a camera view and a navigation map. The robot runs until it finishes docking or reaches the time limit. On the navigation map, the green line is the planned route and the robot marker shows the EKF position estimate.
 
@@ -69,17 +68,8 @@ You should see the 3D simulation, a camera view and a navigation map. The robot 
 - Double-click: reset the view.
 - Press **Q** in a simulation window to stop.
 
-The project displays the MuJoCo view through OpenCV. This avoids the black-screen problem that occurred with the native viewer on the development PC.
+The project displays the MuJoCo view through OpenCV. 
 
-You can also run these commands from the project folder:
-
-```powershell
-.\.venv\Scripts\python.exe main.py
-.\.venv\Scripts\python.exe main.py --headless
-.\.venv\Scripts\python.exe main.py --seconds 200 --no-plots
-```
-
-`--headless` skips the live windows; result graphs still appear afterwards. `--no-plots` disables result graphs.
 
 ## Result graphs
 
@@ -91,11 +81,6 @@ Three figures appear after the run:
 | EKF consistency | Position and heading estimation errors, uncertainty bounds and NEES |
 | Tracking and docking | Cross-track error, distance to the docking goal and heading error |
 
-Use the **Save** button in each graph window to save pictures into `results/`. Suggested filenames:
-
-- `navigation_trajectory.png`
-- `ekf_consistency.png`
-- `tracking_and_docking.png`
 
 The terminal reports whether docking succeeded, whether the robot touched an obstacle, and how well the EKF estimated its position and heading. It also prints consistency metrics. Changing the noise or trial settings can change the results.
 
@@ -130,7 +115,7 @@ The robot needs a known map, and its simulated dynamics are approximate. The cam
 
 The motion model, LQR, EKF and consistency plots follow ideas from the Week 5 to 8 tutorials and Assessment 3. This project also includes camera marker detection, LiDAR map matching, path planning and docking.
 
-ChatGPT/Codex helped adapt the tutorial code and set up MuJoCo. It also helped write and organise the simulation code, debug problems, create the result plots and edit this README.
+ChatGPT/Codex helped adapt the tutorial code and set up MuJoCo. It also helped debug problems, create the result plots and edit this README.
 
 ## Asset attribution
 
