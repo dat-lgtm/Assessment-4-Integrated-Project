@@ -120,5 +120,9 @@ ChatGPT/Codex helped adapt the tutorial code and set up MuJoCo. It also helped d
 ## Asset attribution
 
 TurtleBot3 visual meshes were adapted from the [ROBOTIS TurtleBot3 repository](https://github.com/ROBOTIS-GIT/turtlebot3). The original source URDF and `ROBOTIS_LICENSE` are in `assets/`. Include the licence when sharing the project.
+## Individual Contribution Statement
 
+**Contributor:** Tran Tuan Dat Nguyen - 14226258
+**Project Type:** Individual Project 
+This project was completed independently. I was responsible for the design, implementation, integration, testing, and documentation of the project.
 
