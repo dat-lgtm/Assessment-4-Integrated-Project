@@ -123,6 +123,8 @@ TurtleBot3 visual meshes were adapted from the [ROBOTIS TurtleBot3 repository](h
 ## Individual Contribution Statement
 
 **Contributor:** Tran Tuan Dat Nguyen - 14226258
+
 **Project Type:** Individual Project 
+
 This project was completed independently. I was responsible for the design, implementation, integration, testing, and documentation of the project.
 
